@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 
-function createRewardInfoEmbed() {
+function createStepsAfterMintEmbed() {
   return new EmbedBuilder()
     .setColor("#0099FF") 
     .setTitle("Next Steps After Minting Your NFT")
@@ -40,4 +40,4 @@ function createRewardInfoEmbed() {
     .setFooter({text: 'Your journey in the realm of Phantoms is filled with wonder. Thank you for being a part of this adventure!', iconURL: 'https://www.randgallery.com/wp-content/uploads/2023/09/54-1.png'});
 }
 
-export { createRewardInfoEmbed };
+export { createStepsAfterMintEmbed };

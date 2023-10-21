@@ -1,4 +1,4 @@
 export default {
-    name: 'rewardinfo',
+    name: 'stepsaftermint',
     description: 'Get reward claim information.'
   }

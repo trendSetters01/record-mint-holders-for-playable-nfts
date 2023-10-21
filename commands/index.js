@@ -1,7 +1,7 @@
 import { REST, Routes } from 'discord.js';
 import setAddress from './setAddress.js';
 import invite from './invite.js';
-import rewardInfo from './rewardInfo.js';
+import stepsAfterMint from './stepsAfterMint.js';
 import howitworks from './howitworks.js';
 import "dotenv/config";
 
@@ -11,7 +11,7 @@ const clientID = process.env["CLIENT_ID"];
 const commands = [
   setAddress,
   invite,
-  rewardInfo,
+  stepsAfterMint,
   howitworks
 ];
 
