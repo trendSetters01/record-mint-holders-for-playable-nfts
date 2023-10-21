@@ -11,7 +11,7 @@ function createHowItWorksEmbed() {
       {
         name: "🔹 One Phantom, One Reward",
         value:
-          "For every Phantom NFT you hold, you are eligible for one unique reward. It’s important to note that owning multiple Phantom V2 nft in one Algorand address doesn't equate to multiple rewards. Why? It’s about fairness and ensuring every member of our community gets a slice of the adventure. It keeps things exclusive and exciting for everyone!",
+          "For every Phantom NFT you hold, you are eligible for one Byte City NFT (Will change in the future).",
       },
       {
         name: "🔹 Verification of Ownership",
@@ -21,12 +21,12 @@ function createHowItWorksEmbed() {
       {
         name: "🔹 Choose Your Reward Destination",
         value:
-          "Upon successful verification, you have the freedom to choose between a Matic or Cardano wallet for receiving your reward. Your preference matters, and we want to deliver the reward where it’s most convenient for you.",
+          "Upon successful verification, you have the freedom to choose between a Matic or Cardano wallet for receiving playable avatar NFT.",
       },
       {
         name: "🔹 Manual Reward Distribution",
         value:
-          "We value your participation and excitement! That's why our team is meticulously handling the reward distribution process manually. This attention to detail ensures that every rightful NFT owner receives their due reward.",
+          "We value your participation and excitement! This attention to detail ensures that every rightful NFT owner receives their due reward.",
       },
       {
         name: "🔹 Community and Beyond",
