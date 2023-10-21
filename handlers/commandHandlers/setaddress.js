@@ -58,7 +58,7 @@ async function handleSetaddress(interaction) {
     console.error('createSetAddressFailureEmbed: ',error.message)
     await interaction.reply({ embeds: [failureEmbed], ephemeral: true });
   }
-  await logUsersAndAddressSets(userId);
+  // await logUsersAndAddressSets(userId);
 }
 
 async function logUsersAndAddressSets(userId) {

@@ -3,6 +3,7 @@ import setAddress from './setAddress.js';
 import invite from './invite.js';
 import stepsAfterMint from './stepsAfterMint.js';
 import howitworks from './howitworks.js';
+import verifynft from './verifyNFT.js'
 import "dotenv/config";
 
 const token = process.env["BOT_TOKEN"];
@@ -12,7 +13,8 @@ const commands = [
   setAddress,
   invite,
   stepsAfterMint,
-  howitworks
+  howitworks,
+  verifynft
 ];
 
 const rest = new REST({
