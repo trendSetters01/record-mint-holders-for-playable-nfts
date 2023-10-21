@@ -16,7 +16,7 @@ function createSetAddressFailureEmbed(reason) {
     .setColor(16711680) // This color represents a shade of red;
     .setTitle("Operation Failed")
     .setDescription(
-      `Unfortunately, we encountered an issue while processing your request. Here's what happened:\n\n**Reason:** ${reason}\n\nPlease try again later or contact us on the questions channel for assistance.`
+      `Unfortunately, we encountered an issue while processing your request. Here's what happened:\n\n**Reason:** ${reason}\n\nPlease try again or contact us on the questions channel for assistance.`
     );
 }
 

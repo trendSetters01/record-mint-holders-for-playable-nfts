@@ -53,14 +53,15 @@ async function handleSetaddress(interaction) {
 
     // Here, we reply to the interaction with the failure embed, providing the error message.
     const failureEmbed = createSetAddressFailureEmbed(
-      error.message || "An unexpected error occurred."
+      error.message && 'Algorand address verification failed' || "An unexpected error occurred."
     );
+    console.error('createSetAddressFailureEmbed: ',error.message)
     await interaction.reply({ embeds: [failureEmbed], ephemeral: true });
   }
-  await logUsersAndAddressSets();
+  await logUsersAndAddressSets(userId);
 }
 
-async function logUsersAndAddressSets() {
+async function logUsersAndAddressSets(userId) {
   // Fetch users by userId
   const users = await User.findAll({ where: { userId } });
 

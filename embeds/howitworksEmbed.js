@@ -11,7 +11,7 @@ function createHowItWorksEmbed() {
       {
         name: "🔹 One Phantom, One Reward",
         value:
-          "For every Phantom NFT you hold, you are eligible for one Byte City NFT (Will change in the future).",
+          "For every Phantom NFT you hold, you are eligible for one Byte City NFT (Will change in the future). It’s important to note that owning multiple Phantom V2 nft in one Algorand address doesn't equate to multiple rewards. Why? It’s about fairness and ensuring every member of our community gets a slice of the adventure.",
       },
       {
         name: "🔹 Verification of Ownership",
