@@ -13,9 +13,13 @@ async function handleVerifynft(interaction) {
   );
 
   if (isValid) {
-    interaction.member.roles.add("1145372070553845770");
+    try {
+      await interaction.member.roles.add("1145372070553845770");
+    } catch (error) {
+      console.log("attempted role add failed", error);
+    }
   }
-  
+
   await interaction.reply({ embeds: [verifynftEmbed] });
 }
 

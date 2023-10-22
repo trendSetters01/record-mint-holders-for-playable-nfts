@@ -6,7 +6,7 @@ function createSetAddressSuccessEmbed(address) {
       .setColor(5763719) // This color represents a shade of green;
       .setTitle("Algorand Address Registered Successfully")
       .setDescription(
-        `Congratulations! Your Algorand address has been successfully registered as:\n\`${address}\`\n\nYou're now eligible to claim exclusive rewards! To proceed, please use the following command:\n\`/verifynft\`\n\nThis will initiate the process for you to verify your Phantom V2 NFT. Thank you for your participation!`
+        `Congratulations! Your Algorand address has been successfully registered as:\n\`${address}\`\n\n Please use the following command:\n\`/verifynft\`\n\nThis will initiate the process for you to verify your Phantom V2 NFT. Thank you for your participation!`
       )
   );
 }

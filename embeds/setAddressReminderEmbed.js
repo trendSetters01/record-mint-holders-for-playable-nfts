@@ -12,7 +12,7 @@ async function sendSetAddressReminderForNFTVerificationEmbed(interaction) {
   return new EmbedBuilder()
     .setColor(15277667)
     .setTitle('🚫 Algorand Address')
-    .setDescription("Please set your Algorand address ( using the `/setaddress` command before verifying");
+    .setDescription("Please set your Algorand address ( using the `/setaddress` command before verifying )");
 }
 
 export { sendSetAddressReminderEmbed, sendSetAddressReminderForNFTVerificationEmbed };

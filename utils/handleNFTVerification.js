@@ -15,6 +15,7 @@ async function handleNFTVerification(interaction, userChoice) {
       const isValid = await verifyNFT(userAddress);
 
       if (isValid) {
+        console.log(userChoice)
         return userChoice === "versionOne"
           ? { verifynftEmbed: createVerifyV1NFTSuccessEmbed(), isValid }
           : { verifynftEmbed: createVerifyV2NFTSuccessEmbed(), isValid };
