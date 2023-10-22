@@ -1,5 +1,5 @@
-import { verifyNFT } from "../algorand/accountManagement.js";
-import { getUserAddress, getuserNFTAssetID } from "../state/index.js";
+import { verifyNFT } from "../algorand/verifyNFT.js";
+import { getUserAddress } from "../state/index.js";
 import {
   createVerifyV1NFTSuccessEmbed,
   createVerifyV2NFTSuccessEmbed,
@@ -9,25 +9,35 @@ import {
 
 async function handleNFTVerification(interaction, userChoice) {
   const userAddress = getUserAddress(interaction.user.id);
-  const userNFTAssetID = getuserNFTAssetID(interaction.user.id);
 
   if (userAddress) {
     try {
-      const isValid = await verifyNFT(userAddress, userNFTAssetID);
+      const isValid = await verifyNFT(userAddress);
 
       if (isValid) {
         return userChoice === "versionOne"
-          ? createVerifyV1NFTSuccessEmbed()
-          : createVerifyV2NFTSuccessEmbed();
+          ? { verifynftEmbed: createVerifyV1NFTSuccessEmbed(), isValid }
+          : { verifynftEmbed: createVerifyV2NFTSuccessEmbed(), isValid };
       } else {
-        return createVerifyNFTFailureEmbed();
+        return {
+          verifynftEmbed: createVerifyNFTFailureEmbed(),
+          isValid
+        };
       }
     } catch (error) {
       console.error("Error sending Algo:", error);
-      return createVerifyNFTFailureEmbed(error.message  || "An unexpected error occurred.");
+      return {
+        verifynftEmbed: createVerifyNFTFailureEmbed(
+          error.message || "An unexpected error occurred."
+        ),
+        isValid: false,
+      };
     }
   } else {
-    return sendSetAddressReminderForNFTVerificationEmbed();
+    return {
+      verifynftEmbed: await sendSetAddressReminderForNFTVerificationEmbed(),
+      isValid: false,
+    };
   }
 }
 

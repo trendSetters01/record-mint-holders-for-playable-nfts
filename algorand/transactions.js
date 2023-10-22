@@ -1,7 +1,7 @@
 import algosdk from "algosdk";
 import { algodClient } from './config.js';
 
-import { getUserTokenHolding } from './accountManagement.js';
+import { getUserTokenHolding } from './getUserTokenHolding.js';
 import { calculateMultiplier } from '../utils/index.js';
 import 'dotenv/config'
 
@@ -11,7 +11,6 @@ const assetId = parseInt("6670024", 10);
 
 export async function sendAsset(address, baseAmount) {
   try {
-    const verifyNFT = await getUserTokenHolding(address);
     // Input validation
     if (!algosdk.isValidAddress(address)) {
       throw new Error('Invalid Algorand address provided.');

@@ -24,7 +24,7 @@ function createVerifyNFTFailureEmbed(reason) {
     .setTitle("NFT verification Failed")
     .setDescription(
       `Unfortunately, we encountered an issue while processing your request.${
-        reason ? "Here's what happened:\n\n **Reason:**" : "\n\n Ensure your asset id was correct."
+         "\n\n Ensure your address has a phantom nft"
       } ${
         reason ? reason : ""
       }\n\nPlease try again or contact us on the questions channel for assistance.`

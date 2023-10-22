@@ -9,14 +9,8 @@ export default {
       required: true,
       choices: [
         { name: "V1", value: "versionOne" },
-        { name: "V2", value: "versionTwo" },
+        // { name: "V2", value: "versionTwo" },
       ],
-    },
-    {
-      name: "assetid",
-      type: 3,
-      description: "Your choice for Phantom Version",
-      required: true,
-    },
+    }
   ],
 };

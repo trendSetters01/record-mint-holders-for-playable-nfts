@@ -1,15 +1,21 @@
-import { setuserNFTChoice, setuserNFTAssetID } from "../../state/index.js";
+import { setuserNFTChoice } from "../../state/index.js";
 import { handleNFTVerification } from "../../utils/handleNFTVerification.js";
 
 async function handleVerifynft(interaction) {
   const userId = interaction.user.id;
   const userChoice = interaction.options.getString("choice");
-  const userNFTAssetID = interaction.options.getString("assetid");
 
   setuserNFTChoice(userId, userChoice);
-  setuserNFTAssetID(userId, userNFTAssetID);
+
+  const { verifynftEmbed, isValid } = await handleNFTVerification(
+    interaction,
+    userChoice
+  );
+
+  if (isValid) {
+    interaction.member.roles.add("1145372070553845770");
+  }
   
-  const verifynftEmbed = await handleNFTVerification(interaction, userChoice);
   await interaction.reply({ embeds: [verifynftEmbed] });
 }
 
