@@ -1,6 +1,8 @@
 import { setuserNFTChoice } from "../../state/index.js";
 import { handleNFTVerification } from "../../utils/handleNFTVerification.js";
 
+const PHANTOM_ROLE = process.env["PHANTOM_ROLE"];
+
 async function handleVerifynft(interaction) {
   const userId = interaction.user.id;
   const userChoice = interaction.options.getString("choice");
@@ -14,7 +16,7 @@ async function handleVerifynft(interaction) {
 
   if (isValid) {
     try {
-      await interaction.member.roles.add("1145372070553845770");
+      await interaction.member.roles.add(PHANTOM_ROLE);
     } catch (error) {
       console.log("attempted role add failed", error);
     }
