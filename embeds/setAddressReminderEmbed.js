@@ -8,7 +8,7 @@ async function sendSetAddressReminderEmbed(interaction) {
 
   await interaction.reply({ embeds: [pleaseSetAddressEmbed], ephemeral: true });
 }
-async function sendSetAddressReminderForNFTVerificationEmbed(interaction) {
+function sendSetAddressReminderForNFTVerificationEmbed(interaction) {
   return new EmbedBuilder()
     .setColor(15277667)
     .setTitle('🚫 Algorand Address')

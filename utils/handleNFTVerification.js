@@ -35,7 +35,7 @@ async function handleNFTVerification(interaction, userChoice) {
     }
   } else {
     return {
-      verifynftEmbed: await sendSetAddressReminderForNFTVerificationEmbed(),
+      verifynftEmbed: sendSetAddressReminderForNFTVerificationEmbed(),
       isValid: false,
     };
   }
