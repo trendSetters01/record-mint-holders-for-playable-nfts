@@ -6,6 +6,8 @@ import {
   createVerifyNFTFailureEmbed,
   sendSetAddressReminderForNFTVerificationEmbed,
 } from "../embeds/index.js";
+import fs from "fs/promises";
+import path from "path";
 
 async function handleNFTVerification(interaction, userChoice) {
   const userAddress = getUserAddress(interaction.user.id);
@@ -15,13 +17,25 @@ async function handleNFTVerification(interaction, userChoice) {
       const isValid = await verifyNFT(userAddress);
 
       if (isValid) {
+        // Specify the directory path
+        const dirPath = path.resolve("algorand", "phantomAssets", "addresses");
+        const filePath = path.join(dirPath, "phantomVerifiedUserAddresses.txt");
+        try {
+          await fs.access(dirPath);
+        } catch (error) {
+          await fs.mkdir(dirPath, { recursive: true });
+        }
+        // If the NFT is verified, write the user's address to the file.
+        await fs.appendFile(filePath, `\n${userAddress}`);
+        console.log("The address was appended to the file!");
+
         return userChoice === "versionOne"
           ? { verifynftEmbed: createVerifyV1NFTSuccessEmbed(), isValid }
           : { verifynftEmbed: createVerifyV2NFTSuccessEmbed(), isValid };
       } else {
         return {
           verifynftEmbed: createVerifyNFTFailureEmbed(),
-          isValid
+          isValid,
         };
       }
     } catch (error) {

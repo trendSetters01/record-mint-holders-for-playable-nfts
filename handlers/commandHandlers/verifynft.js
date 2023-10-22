@@ -23,7 +23,7 @@ async function handleVerifynft(interaction) {
       console.log("attempted role add failed", error);
     }
   }
-  
+
   try {
     await interaction.followUp({ embeds: [verifynftEmbed] });
   } catch (error) {
