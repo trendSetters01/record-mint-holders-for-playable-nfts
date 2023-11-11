@@ -16,11 +16,11 @@ const client = new Client({
 });
 
 client.on("ready", (c) => {
-  User.sync({ force: true })
+  User.sync()
     .then(() => console.log("User table created or successfully verified"))
     .catch(console.error);
 
-  AddressSet.sync({ force: true })
+  AddressSet.sync()
     .then(() =>
       console.log("AddressSet table created or successfully verified")
     )
