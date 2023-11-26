@@ -105,6 +105,13 @@ export const v1NFTs = [
     "opted-in-at-round": 32352649,
   },
   {
+    amount: 1,
+    "asset-id": 1201571415,
+    deleted: false,
+    "is-frozen": false,
+    "opted-in-at-round": 33579259,
+  },
+  {
     amount: 0,
     "asset-id": 1201928642,
     deleted: false,
@@ -315,7 +322,7 @@ export const v1NFTs = [
     "opted-in-at-round": 33424533,
   },
   {
-    amount: 1,
+    amount: 0,
     "asset-id": 1234336394,
     deleted: false,
     "is-frozen": false,
@@ -348,5 +355,40 @@ export const v1NFTs = [
     deleted: false,
     "is-frozen": false,
     "opted-in-at-round": 33475571,
+  },
+  {
+    amount: 0,
+    "asset-id": 1237139823,
+    deleted: false,
+    "is-frozen": false,
+    "opted-in-at-round": 33525857,
+  },
+  {
+    amount: 0,
+    "asset-id": 1237141484,
+    deleted: false,
+    "is-frozen": false,
+    "opted-in-at-round": 33525885,
+  },
+  {
+    amount: 1,
+    "asset-id": 1238043000,
+    deleted: false,
+    "is-frozen": false,
+    "opted-in-at-round": 33548743,
+  },
+  {
+    amount: 1,
+    "asset-id": 1238044254,
+    deleted: false,
+    "is-frozen": false,
+    "opted-in-at-round": 33548775,
+  },
+  {
+    amount: 1,
+    "asset-id": 1238047072,
+    deleted: false,
+    "is-frozen": false,
+    "opted-in-at-round": 33548848,
   },
 ];

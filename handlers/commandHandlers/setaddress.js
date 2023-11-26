@@ -69,24 +69,27 @@ async function handleSetaddress(interaction) {
 }
 
 async function logUsersAndAddressSets(userId) {
-  // Fetch users by userId
-  const users = await User.findAll({ where: { userId } });
+  //   const users = await User.findAll();
+  // const addressSets = await AddressSet.findAll();
+  // console.log(users, "\n", "\n", addressSets);
+  // // Fetch users by userId
+  // const users = await User.findAll({ where: { userId } });
 
-  // Check if users were found
-  if (users.length > 0) {
-    // Since 'users' is an array, we need to extract the IDs of all the user records.
-    // This creates an array of user IDs.
-    const userIds = users.map((user) => user.id);
+  // // Check if users were found
+  // if (users.length > 0) {
+  //   // Since 'users' is an array, we need to extract the IDs of all the user records.
+  //   // This creates an array of user IDs.
+  //   const userIds = users.map((user) => user.id);
 
-    // Now, fetch address sets for all those user IDs.
-    const addressSets = await AddressSet.findAll({
-      where: { userId: userIds },
-    });
+  //   // Now, fetch address sets for all those user IDs.
+  //   const addressSets = await AddressSet.findAll({
+  //     where: { userId: userIds },
+  //   });
 
-    console.log(users, "\n", "\n", addressSets);
-  } else {
-    console.log("No users found with the provided userId");
-  }
+  //   console.log(users, "\n", "\n", addressSets);
+  // } else {
+  //   console.log("No users found with the provided userId");
+  // }
 }
 
 export { handleSetaddress };

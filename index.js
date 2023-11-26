@@ -1,6 +1,11 @@
 import { Client, IntentsBitField } from "discord.js";
 import { handleInteraction } from "./handlers/index.js";
-import { User, AddressSet } from "./db/models/index.js";
+import {
+  User,
+  AddressSet,
+  StakingSet,
+  StakingAssets,
+} from "./db/models/index.js";
 
 import "dotenv/config";
 
@@ -25,6 +30,17 @@ client.on("ready", (c) => {
       console.log("AddressSet table created or successfully verified")
     )
     .catch(console.error);
+
+  // StakingSet.sync()
+  //   .then(() =>
+  //     console.log("StakingSet table created or successfully verified")
+  //   )
+  //   .catch(console.error);
+  // StakingAssets.sync()
+  //   .then(() =>
+  //     console.log("StakingAssets table created or successfully verified")
+  //   )
+  //   .catch(console.error);
   console.log(`${c.user.tag} is online`);
 });
 
