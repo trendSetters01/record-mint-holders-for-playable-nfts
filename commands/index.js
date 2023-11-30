@@ -18,7 +18,7 @@ const commands = [
   // stepsAfterMint,
   // howitworks,
   verifynft,
-  // assignrole,
+  assignrole,
   optin,
   // registerstake,
 ];

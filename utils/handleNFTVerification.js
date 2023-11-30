@@ -1,5 +1,9 @@
 import { verifyNFT } from "../algorand/verifyNFT.js";
-import { getUserAddress } from "../state/index.js";
+import { getAddress } from "../db/utils/getAddress.js";
+
+import fs from "fs/promises";
+import path from "path";
+
 import {
   createVerifyV1NFTSuccessEmbed,
   createVerifyV2NFTSuccessEmbed,
@@ -7,32 +11,9 @@ import {
   sendSetAddressReminderForNFTVerificationEmbed,
 } from "../embeds/index.js";
 
-import { AddressSet, User } from "../db/models/index.js";
-import { DB } from "../db/config/index.js";
-
-import fs from "fs/promises";
-import path from "path";
-
 async function handleNFTVerification(interaction, userChoice) {
-  let userAddress = getUserAddress(interaction.user.id);
-  // Fetch users by userId
-  const users = await User.findAll({ where: { userId: interaction.user.id } });
+  let userAddress = await getAddress(interaction, "algorandAddress");
 
-  // Check if users were found
-  if (users.length > 0) {
-    // Since 'users' is an array, we need to extract the IDs of all the user records.
-    // This creates an array of user IDs.
-    const userIds = users.map((user) => user.id);
-
-    // Now, fetch address sets for all those user IDs.
-    const addressSets = await AddressSet.findAll({
-      where: { userId: userIds },
-    });
-
-    userAddress = addressSets[0].dataValues.algorandAddress;
-  } else {
-    console.log("No users found with the provided userId");
-  }
   if (userAddress) {
     try {
       const isValid = await verifyNFT(userAddress);

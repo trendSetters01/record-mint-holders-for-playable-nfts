@@ -6,7 +6,9 @@ export async function checkOptIn(address, assetId) {
     const accountInfo = await algodClient.accountInformation(address).do();
 
     // Check if the account contains the asset ID in its assets array
-    return accountInfo.assets.some((asset) => asset["asset-id"] === assetId);
+    return accountInfo.assets.some((asset) => {
+      return asset["asset-id"] === parseInt(assetId, 10)
+    });
   } catch (error) {
     console.error("Error checking opt-in status:", error);
     return false;

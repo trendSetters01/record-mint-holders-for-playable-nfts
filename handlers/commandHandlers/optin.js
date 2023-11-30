@@ -35,14 +35,12 @@ async function handleOptin(interaction) {
       .setImage(`attachment://qrcode.png`)
       .setTitle("Opt-in via QR Code")
       .setDescription(
-        `If needed you can paste this url in your browser, on your mobile device. This will open the Perawallet app and prompt you to opt-in to the asset.`
+        `If needed you can [Click here to opt-in](https://phantoms-ashy.vercel.app/opt-in/${assetId}), on your mobile device. This will open the Perawallet app and prompt you to opt-in to the asset.`
       );
-    const urlEmbed = new EmbedBuilder()
-      .setColor(16711680)
-      .setTitle(`${url}`);
+      
+    
 
     await interaction.followUp({ embeds: [qrCodeEmbed] });
-    await interaction.followUp({ embeds: [urlEmbed] });
   } else {
     // Handle the case when QR code generation fails
     await interaction.followUp({ content: "Failed to generate QR code." });
@@ -50,7 +48,6 @@ async function handleOptin(interaction) {
 }
 
 function generateAssetOptInURL(assetId) {
-  console.log("assetId", `perawallet://?amount=0&asset=${assetId}`);
   return `perawallet://?amount=0&asset=${assetId}`;
 }
 

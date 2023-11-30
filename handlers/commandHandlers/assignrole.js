@@ -1,12 +1,14 @@
 import { EmbedBuilder } from "discord.js";
+
+import fs from "fs/promises";
+import path from "path";
+
 import { verifyNFT } from "../../algorand/assignRole/verifyForRole.js";
 import { checkOptIn } from "../../algorand/assignRole/checkOptin.js";
 import { sendAssetToUser } from "../../algorand/assignRole/sendAssetToUser.js";
 import { AddressSet, User } from "../../db/models/index.js";
 import { DB } from "../../db/config/index.js";
 import { userAddressRegistration } from "../../utils/index.js";
-import fs from "fs/promises";
-import path from "path";
 
 async function handleAssignrole(interaction) {
   const userId = interaction.user.id;
@@ -21,34 +23,13 @@ async function handleAssignrole(interaction) {
       await replyInvalidRequest(interaction);
       return;
     }
-    const rolesToAssetId = {
-      Singlev1: "1176446283465097237",
-      Fourv1: "1176446363135918110",
-      Fivev1: "1176445906967613550",
-      // Tenv1: 4,
-      // Fifteenv1: 5,
-      // Tweentyv1: 6,
-      // Singlev2: 7,
-      // Fivev2: 8,
-      // Tenv2: 9,
-      // Fifteenv2: 10,
-      // Tweentyv2: 11,
-      // Add other roles here
-    };
-    await interaction.member.roles.add(`${rolesToAssetId[role]}`);
-
     const user = await createUserOrUpdateAddressSet(
       userId,
       userAddress,
       transaction
     );
     if (user) {
-      await processUserVerification(
-        userAddress,
-        role,
-        transaction,
-        interaction
-      );
+      await processUserVerification(userAddress, role, interaction);
     }
   } catch (error) {
     console.error("Error in NFT verification:", error);
@@ -83,16 +64,14 @@ async function createUserOrUpdateAddressSet(userId, userAddress, transaction) {
   return user;
 }
 
-async function processUserVerification(
-  userAddress,
-  role,
-  transaction,
-  interaction
-) {
+async function processUserVerification(userAddress, role, interaction) {
   const rolesToAssetId = {
     Singlev1: "1247047572",
     Fourv1: "1247052279",
     Fivev1: "1247046654",
+    // Singlev1: "1247018740",
+    // Fourv1: "1247018740",
+    // Fivev1: "1247018740",
     // Tenv1: 4,
     // Fifteenv1: 5,
     // Tweentyv1: 6,
@@ -119,6 +98,24 @@ async function processUserVerification(
     interaction
   );
   if (optedIn) {
+    await interaction.member.roles.add(
+      `${
+        {
+          Singlev1: "1176446283465097237",
+          Fourv1: "1176446363135918110",
+          Fivev1: "1176445906967613550",
+          // Tenv1: 4,
+          // Fifteenv1: 5,
+          // Tweentyv1: 6,
+          // Singlev2: 7,
+          // Fivev2: 8,
+          // Tenv2: 9,
+          // Fifteenv2: 10,
+          // Tweentyv2: 11,
+          // Add other roles here
+        }[role]
+      }`
+    );
     await sendAssetToUser(userAddress, assetId, 1);
   }
 }
@@ -132,7 +129,7 @@ function createEmbedForRole(role, rolesToAssetId) {
         .setColor(16711680)
         .setTitle("You have been verified for the role")
         .setDescription(
-          `Please optin to asset ${rolesToAssetId[role]} and wait for the transaction to complete max 5 minutes and receive your phantom role token`
+          `Please optin (you can use /optin from phntm rewards bot) to asset ${rolesToAssetId[role]} and wait for the transaction to complete. ( max 5 minutes wait ) and receive your phantom role token`
         );
     default:
       return new EmbedBuilder()
@@ -141,31 +138,6 @@ function createEmbedForRole(role, rolesToAssetId) {
           "Please try again later or hop on Discord for more questions/answers"
         );
   }
-}
-
-async function pollForOptIn(address, assetId, interval, duration, interaction) {
-  const endTime = Date.now() + duration;
-
-  return new Promise((resolve, reject) => {
-    const check = async () => {
-      try {
-        if (await checkOptIn(address, assetId)) {
-          console.log("User has opted in!");
-          resolve(true);
-        } else if (Date.now() < endTime) {
-          setTimeout(check, interval);
-        } else {
-          console.log("Polling time expired. User did not opt in.");
-          resolve(false);
-          await replyOptInFailed(interaction);
-        }
-      } catch (error) {
-        reject(error);
-      }
-    };
-
-    check();
-  });
 }
 
 async function replyInvalidRequest(interaction) {
@@ -193,6 +165,33 @@ async function replyOptInFailed(interaction) {
         .setTitle("Opt-in not detected")
         .setDescription("Please try opting in again."),
     ],
+  });
+}
+
+// needs to be adjusted for different edge cases
+// 1. user opts in but my app restarts before I can send the asset so the timer for the poll gets reset
+async function pollForOptIn(address, assetId, interval, duration, interaction) {
+  const endTime = Date.now() + duration;
+
+  return new Promise((resolve, reject) => {
+    const check = async () => {
+      try {
+        if (await checkOptIn(address, assetId)) {
+          console.log("User has opted in!");
+          resolve(true);
+        } else if (Date.now() < endTime) {
+          setTimeout(check, interval);
+        } else {
+          console.log("Polling time expired. User did not opt in.");
+          resolve(false);
+          await replyOptInFailed(interaction);
+        }
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    check();
   });
 }
 
