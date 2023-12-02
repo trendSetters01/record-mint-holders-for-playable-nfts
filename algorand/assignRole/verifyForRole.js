@@ -2,8 +2,14 @@ import { algoIndexerClient } from "../config.js";
 
 const phantomV1Address =
   "IWY24Q6GUUIMJITMTR3FDO4Q54UCBPPPIWJUQ57CWLASPRHFHXTXIQUQYA";
-
+  
 async function verifyNFT(address, role) {
+  const knownAssetIds = {
+    Singlev1: "1247047572",
+    Fourv1: "1247052279",
+    Fivev1: "1247046654",
+  };
+
   try {
     let userAssets = await getAllAssetsForAccount(address);
     const userAssetIds = userAssets.map((asset) => asset["asset-id"]);
@@ -11,31 +17,44 @@ async function verifyNFT(address, role) {
     const phantomAssets = await getAllAssetsForAccount(phantomV1Address);
     const phantomAssetIds = phantomAssets.map((asset) => asset["asset-id"]);
 
-    // Count how many of the phantom assets the user owns
-    let count = 0;
+    let phantomCount = 0;
     for (let assetId of userAssetIds) {
       if (phantomAssetIds.includes(assetId)) {
-        count++;
+        phantomCount++;
       }
     }
-    console.log("count", count);
-    // Define the required counts for different roles
-    const requiredCounts = {
-      Singlev1: 1,
-      Fivev1: 5,
-      Fourv1: 4,
-      Tenv1: 10,
-      Fifteenv1: 15,
-      Twentyv1: 20,
-      // Add more as needed
-    };
 
-    // Check if the user meets the requirement
-    if (count >= requiredCounts[role]) {
-      return true; // The user owns the required number of phantom NFTs for this role
+    // Count the specific Phantom role tokens the user owns
+    let tokenCounts = {
+      Singlev1: 0,
+      Fivev1: 0,
+      Fourv1: 0,
+    };
+    for (let asset of userAssets) {
+      if (asset["asset-id"] === knownAssetIds.Singlev1) {
+        tokenCounts.Singlev1 = asset.amount;
+      } else if (asset["asset-id"] === knownAssetIds.Fivev1) {
+        tokenCounts.Fivev1 = asset.amount;
+      } else if (asset["asset-id"] === knownAssetIds.Fourv1) {
+        tokenCounts.Fourv1 = asset.amount;
+      }
+      // Add more cases as needed
     }
 
-    return false; // The user does not meet the requirement
+    // Define the required counts and eligibility for different roles
+    switch (role) {
+      case "Singlev1":
+        return phantomCount >= 1 && tokenCounts.Singlev1 < phantomCount; // User must have at least 1 Phantom NFT and fewer Spark tokens than Phantom NFTs
+      case "Fivev1":
+        return (
+          phantomCount >= 5 && tokenCounts.Fivev1 < Math.floor(phantomCount / 5)
+        ); // User must have at least 5 Phantom NFTs and fewer Spectral Flame tokens than sets of 5 Phantom NFTs
+      case "Fourv1":
+        return phantomCount >= 15 && tokenCounts.Fourv1 < 1; // User must have at least 15 Phantom NFTs and no Mystic Breeze tokens
+      // Add more cases as needed
+      default:
+        return false; // Unknown role
+    }
   } catch (error) {
     console.error("AlgoSDK error: ", error);
     return false; // Handle the error appropriately
