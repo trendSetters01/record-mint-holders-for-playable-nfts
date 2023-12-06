@@ -22,10 +22,10 @@ export default {
         //   name: "Single Phantom V2",
         //   value: "Singlev2",
         // },
-        {
-          name: "Four Phantom Pal",
-          value: "Fourv1",
-        },
+        // {
+        //   name: "Four Phantom Pal",
+        //   value: "Fourv1",
+        // },
         {
           name: "Five Phantom Pal",
           value: "Fivev1",

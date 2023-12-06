@@ -5,9 +5,9 @@ const phantomV1Address =
   
 async function verifyNFT(address, role) {
   const knownAssetIds = {
-    Singlev1: "1247047572",
-    Fourv1: "1247052279",
-    Fivev1: "1247046654",
+    Singlev1: 1247047572,
+    Fourv1: 1247052279,
+    Fivev1: 1247046654,
   };
 
   try {
@@ -35,9 +35,10 @@ async function verifyNFT(address, role) {
         tokenCounts.Singlev1 = asset.amount;
       } else if (asset["asset-id"] === knownAssetIds.Fivev1) {
         tokenCounts.Fivev1 = asset.amount;
-      } else if (asset["asset-id"] === knownAssetIds.Fourv1) {
-        tokenCounts.Fourv1 = asset.amount;
-      }
+      } 
+      // else if (asset["asset-id"] === knownAssetIds.Fourv1) {
+      //   tokenCounts.Fourv1 = asset.amount;
+      // }
       // Add more cases as needed
     }
 

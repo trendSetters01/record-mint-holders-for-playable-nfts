@@ -18,9 +18,7 @@ async function handleAssignrole(interaction) {
     const isValid = await verifyNFT(userAddress, role);
     if (!isValid) {
       await interaction.reply({
-        embeds: [
-          invalidRequestEmbed,
-        ],
+        embeds: [invalidRequestEmbed()],
       });
       return;
     }
@@ -44,6 +42,7 @@ async function processUserVerification(userAddress, role, interaction) {
     Singlev1: "1247047572",
     Fourv1: "1247052279",
     Fivev1: "1247046654",
+    // Singlev1: "1247018740",
   };
 
   const verifynftEmbed = createEmbedForRole(role, rolesToAssetId);
@@ -67,6 +66,7 @@ async function processUserVerification(userAddress, role, interaction) {
           Singlev1: "1176446283465097237",
           Fourv1: "1176446363135918110",
           Fivev1: "1176445906967613550",
+          // Singlev1: "1175962773512015903",
           // Tenv1: 4,
           // Fifteenv1: 5,
           // Tweentyv1: 6,
@@ -84,7 +84,7 @@ async function processUserVerification(userAddress, role, interaction) {
 }
 
 async function replyWithError(interaction, error) {
-  await interaction.reply({
+  await interaction.followUp({
     embeds: [
       new EmbedBuilder()
         .setColor(16711680)
