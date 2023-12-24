@@ -2,7 +2,10 @@ import { EmbedBuilder } from "discord.js";
 
 import { verifyNFT } from "../../algorand/assignRole/verifyForRole.js";
 import { sendAssetToUser } from "../../algorand/assignRole/sendAssetToUser.js";
-import { createUserOrUpdateAddressSet } from "../../db/utils/createUserOrUpdateAddressSet.js";
+import {
+  createUserOrUpdateAddressSet,
+  assignUserRole,
+} from "../../db/utils/index.js";
 import { DB } from "../../db/config/index.js";
 import { pollForOptIn } from "../../utils/index.js";
 import { createEmbedForRole, invalidRequestEmbed } from "../../embeds/index.js";
@@ -28,7 +31,7 @@ async function handleAssignrole(interaction) {
       transaction
     );
     if (user) {
-      await processUserVerification(userAddress, role, interaction);
+      await processUserVerification(user, userAddress, role, interaction);
     }
   } catch (error) {
     console.error("Error in NFT verification:", error);
@@ -37,7 +40,7 @@ async function handleAssignrole(interaction) {
   }
 }
 
-async function processUserVerification(userAddress, role, interaction) {
+async function processUserVerification(user, userAddress, role, interaction) {
   const rolesToAssetId = {
     Singlev1: "1247047572",
     Fourv1: "1247052279",
@@ -60,6 +63,10 @@ async function processUserVerification(userAddress, role, interaction) {
     interaction
   );
   if (optedIn) {
+    // Update or assign the user role in the database
+    await assignUserRole(user, role);
+
+    // Update or assign the user role in discord
     await interaction.member.roles.add(
       `${
         {
@@ -79,6 +86,8 @@ async function processUserVerification(userAddress, role, interaction) {
         }[role]
       }`
     );
+
+    // send the role token to the user
     await sendAssetToUser(userAddress, assetId, 1);
   }
 }

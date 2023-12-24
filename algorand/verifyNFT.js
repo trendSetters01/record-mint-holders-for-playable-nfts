@@ -28,7 +28,7 @@ export async function verifyNFT(address) {
 
 export async function verifySpecificPhntmNFT(address, assetids) {
   try {
-    // Check if the assetids matches any of the NFTs from the phantomAssets list
+    // Check if all the assetids matches against any of the NFTs from the phantomAssets list
     const ownsNFT = await checkPhantomNFT(assetids);
     if (!ownsNFT) {
       return false; // The assedids does not match any phantom NFTs
