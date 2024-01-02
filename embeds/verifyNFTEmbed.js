@@ -11,23 +11,24 @@ function createVerifyV2NFTSuccessEmbed(address) {
 
 function createVerifyV1NFTSuccessEmbed(address) {
   return new EmbedBuilder()
-    .setColor(5763719) // This color represents a shade of green;
-    .setTitle("NFT verified Successfully")
+    .setColor(5763719) // Green color
+    .setTitle("NFT Verification Successful")
     .setDescription(
-      `Congratulations! Your Phantom NFT has been successfully verified`
+      `Congratulations! Your account has met the verification criteria.\n\n` +
+        `Your Algorand address \`${address}\` has been successfully verified as owning a Phantom Pals NFT or holding more than 3500 PHNTM tokens (AssetID: 1279721720).\n\n` +
+        `Welcome to the verified club!`
     );
 }
 
 function createVerifyNFTFailureEmbed(reason) {
   return new EmbedBuilder()
-    .setColor(16711680) // This color represents a shade of red;
-    .setTitle("NFT verification Failed")
+    .setColor(16711680) // Red color
+    .setTitle("NFT Verification Failed")
     .setDescription(
-      `Unfortunately, we encountered an issue while processing your request.${
-         "\n\n Ensure your address has a phantom nft"
-      } ${
-        reason ? reason : ""
-      }\n\nPlease try again or contact us on the questions channel for assistance.`
+      `Unfortunately, we encountered an issue while processing your request.` +
+        `${reason ? `\n\nReason: ${reason}` : ""}` +
+        `\n\nFor verification, your address must own either a Phantom Pals NFT or more than 3500 PHNTM tokens (AssetID: 1279721720).\n\n` +
+        `Please check your holdings and try again, or reach out for assistance in the questions channel if you need help.`
     );
 }
 

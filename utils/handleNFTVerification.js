@@ -13,18 +13,17 @@ import {
 
 import { addVerifiedUserAddress } from "./addVerifiedUserAddress.js";
 
-async function handleNFTVerification(interaction, userChoice) {
-  let userAddress = await getAddress(interaction, "algorandAddress");
-
+async function handleNFTVerification(userAddress, assetId, userChoice) {
+  console.log("userAddress", userAddress);
   if (userAddress) {
     try {
-      const isValid = await verifyNFT(userAddress);
+      const isValid = await verifyNFT(userAddress, assetId);
 
       if (isValid) {
         await addVerifiedUserAddress(userAddress);
 
         return userChoice === "versionOne"
-          ? { verifynftEmbed: createVerifyV1NFTSuccessEmbed(), isValid }
+          ? { verifynftEmbed: createVerifyV1NFTSuccessEmbed(userAddress), isValid }
           : { verifynftEmbed: createVerifyV2NFTSuccessEmbed(), isValid };
       } else {
         return {

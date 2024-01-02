@@ -2,9 +2,12 @@ import { Client, IntentsBitField } from "discord.js";
 import { handleInteraction } from "./handlers/index.js";
 import {
   User,
+  UserRole,
   AddressSet,
   StakingSet,
   StakingAssets,
+  RoleBoost,
+  RoleType,
 } from "./db/models/index.js";
 
 import "dotenv/config";
@@ -25,22 +28,35 @@ client.on("ready", (c) => {
     .then(() => console.log("User table created or successfully verified"))
     .catch(console.error);
 
+  // UserRole.sync({ force: true })
+  //   .then(() => console.log("User Role table created or successfully verified"))
+  //   .catch(console.error);
+
   AddressSet.sync()
     .then(() =>
       console.log("AddressSet table created or successfully verified")
     )
     .catch(console.error);
+  // RoleBoost.sync({ force: true })
+  //   .then(() => console.log("RoleBoost table created or successfully verified"))
+  //   .catch(console.error);
 
-  // StakingSet.sync()
+  // RoleType.sync({ force: true })
+  //   .then(() => console.log("RoleType table created or successfully verified"))
+  //   .catch(console.error);
+
+  // StakingSet.sync({ force: true })
   //   .then(() =>
   //     console.log("StakingSet table created or successfully verified")
   //   )
   //   .catch(console.error);
-  // StakingAssets.sync()
+
+  // StakingAssets.sync({ force: true })
   //   .then(() =>
   //     console.log("StakingAssets table created or successfully verified")
   //   )
   //   .catch(console.error);
+
   console.log(`${c.user.tag} is online`);
 });
 

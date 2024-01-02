@@ -1,25 +1,31 @@
-import { algoIndexerClient } from "./config.js";
+import { algoIndexerClient, algodClient } from "./config.js";
 
 const phantomV1Address =
   "IWY24Q6GUUIMJITMTR3FDO4Q54UCBPPPIWJUQ57CWLASPRHFHXTXIQUQYA";
 
-export async function verifyNFT(address) {
-  try {
-    // Fetch user account information
-    let accountAssets = await getAllAssetsForAccount(address);
+export async function verifyNFT(address, assetId) {
+  const fetchAssetCount = async (assetId) => {
+    try {
+      const accountAssetInformation = await algodClient
+        .accountAssetInformation(`${address}`.trim(), `${assetId}`.trim())
+        .do();
 
-    // Extract the list of asset IDs the user owns
-    const userAssetIds = accountAssets.map((asset) => asset["asset-id"]);
-
-    // Check if the user owns any of the NFTs from the phantomAssets list
-    const phantomAssets = await getAllAssetsForAccount(phantomV1Address);
-    for (let nft of phantomAssets) {
-      if (userAssetIds.includes(nft["asset-id"])) {
-        return true; // The user owns one of the NFTs
-      }
+      return accountAssetInformation["asset-holding"]?.amount || 0;
+    } catch (error) {
+      console.error(
+        `Error fetching asset count for asset ID ${assetId}:`,
+        error
+      );
+      throw error; // Rethrow the error to be caught by the outer catch block
     }
+  };
 
-    return false; // The user does not own any of the NFTs
+  try {
+    const phantomNFTAssetID = assetId ? parseInt(assetId, 10) : 1279721720;
+    const assetCount = await fetchAssetCount(phantomNFTAssetID);
+    return phantomNFTAssetID === 1279721720
+      ? assetCount/100000000 > 3400
+      : assetCount > 0;
   } catch (error) {
     console.error("AlgoSDK error: ", error);
     return false; // Handle the error appropriately
@@ -44,7 +50,6 @@ export async function verifySpecificPhntmNFT(address, assetids) {
     const ownsAllNFTs = assetids.every((assetId) =>
       userAssetIds.includes(parseInt(assetId, 10))
     );
-
     return ownsAllNFTs; // Returns true if the user owns all specified NFTs, false otherwise
   } catch (error) {
     console.error("AlgoSDK error: ", error);
